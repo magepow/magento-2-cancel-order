@@ -10,7 +10,7 @@ php bin/magento setup:upgrade
 php bin/magento setup:static-content:deploy -f
 ```
 ### This Is Result In Frontend
-![result-module-img](https://github.com/magepow/cancelorder/blob/master/media/order-history.gif)
+![result-module-img](https://github.com/magepow/magento2-cancel-order/blob/master/media/order-history.gif)
 
 If this project help you reduce time to develop, you can give me a cup of coffee :) 
 
