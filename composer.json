@@ -1,38 +1,27 @@
 {
   "name": "magepow/cancelorder",
-  "description": "Magepow CancelOrder",
+  "description": "Customer Cancel Order magento2",
   "require": {
-    "php": "~5.5.0|~5.6.0",
-    "magento/magento-composer-installer": "*"
+    "magepow/core": "^1.0.0"
   },
   "type": "magento2-module",
-  "version": "1.0.0",
   "license": [
-    "OSL-3.0",
-    "AFL-3.0"
+    "MIT"
   ],
-  "extra": {
-    "map": [
-      [
-        "*",
-        "Magepow/Gdpr"
-      ]
-    ]
-  },
   "authors": [
     {
       "name": "Magepow",
       "email": "support@magepow.com",
-      "homepage": "https://magepow.com",
+      "homepage": "https://www.magepow.com",
       "role": "Technical Support"
     }
   ],
   "autoload": {
-        "files": [
-            "registration.php"
-        ],
-        "psr-4": {
-            "Magepow\\CancelOrder\\": ""
-        }
-    }
+    "psr-4": {
+      "Magepow\\CancelOrder\\": ""
+    },
+    "files": [
+      "registration.php"
+    ]
+  }
 }
