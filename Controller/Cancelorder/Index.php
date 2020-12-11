@@ -4,7 +4,7 @@
  * @Author: Ha Manh
  * @Date:   2020-12-08 08:29:17
  * @Last Modified by:   Ha Manh
- * @Last Modified time: 2020-12-10 17:21:42
+ * @Last Modified time: 2020-12-11 09:09:04
  */
 
 namespace Magepow\CancelOrder\Controller\Cancelorder;
@@ -49,26 +49,29 @@ class Index extends \Magento\Framework\App\Action\Action
             $order->cancel();
             $order->save();
             $this->messageManager->addSuccess(__('Order has been canceled successfully.'));
-            $customerData = $this->_customerSession->getCustomer();
-            $emailTemplateVariables = array();
-            $emailTempVariables = [
-                'orderid' => $order->getId()
-            ];
-            $senderName = $customerData->getName();
-            $senderEmail = $customerData->getEmail();
-            $postObject = new \Magento\Framework\DataObject();
-            $postObject->setData($emailTempVariables);
-            $sender = [
-                'name' => $senderName,
-                'email' => $this->helper->getEmailSender(),
+            if($this->helper->getEmailSender())
+            {
+                $customerData = $this->_customerSession->getCustomer();
+                $emailTemplateVariables = array();
+                $emailTempVariables = [
+                    'orderid' => $order->getId()
                 ];
-            $transport = $this->transportBuilder->setTemplateIdentifier('cancel_order_email_template')
-            ->setTemplateOptions(['area' => \Magento\Framework\App\Area::AREA_FRONTEND, 'store' => \Magento\Store\Model\Store::DEFAULT_STORE_ID])
-            ->setTemplateVars(['data' => $postObject])
-            ->setFrom($sender)
-            ->addTo($senderEmail)           
-            ->getTransport();               
-            $transport->sendMessage();
+                $senderName = $customerData->getName();
+                $senderEmail = $customerData->getEmail();
+                $postObject = new \Magento\Framework\DataObject();
+                $postObject->setData($emailTempVariables);
+                $sender = [
+                    'name' => $senderName,
+                    'email' => $this->helper->getEmailSender(),
+                    ];
+                $transport = $this->transportBuilder->setTemplateIdentifier('cancel_order_email_template')
+                ->setTemplateOptions(['area' => \Magento\Framework\App\Area::AREA_FRONTEND, 'store' => \Magento\Store\Model\Store::DEFAULT_STORE_ID])
+                ->setTemplateVars(['data' => $postObject])
+                ->setFrom($sender)
+                ->addTo($senderEmail)           
+                ->getTransport();               
+                $transport->sendMessage();
+            }
         } else {
             $this->messageManager->addError(__('Order cannot be canceled.'));
         }
