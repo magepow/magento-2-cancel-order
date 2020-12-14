@@ -3,7 +3,7 @@
  * @Author: Ha Manh
  * @Date:   2020-12-08 08:29:17
  * @Last Modified by:   Ha Manh
- * @Last Modified time: 2020-12-10 17:22:25
+ * @Last Modified time: 2020-12-14 10:18:29
  */
 
 namespace Magepow\CancelOrder\Helper;
@@ -57,4 +57,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     {
         return $this->getConfigModule('general/email_sender');
     }
+
+    public function getEmailSeller()
+    {
+        return $this->getConfigModule('general/email_seller');
+    }    
 }
