@@ -17,10 +17,12 @@
                 </field>
                 <field id="email_sender" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Email Sender</label>
+                    <validate>validate-email</validate>
                     <comment>Email sender when the customer cancels the order</comment>
                 </field>
                 <field id="email_seller" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Email Seller</label>
+                    <validate>validate-email</validate>
                     <comment>Enter admin email to get notified to each Canceled order</comment>
                 </field>
             </group>
