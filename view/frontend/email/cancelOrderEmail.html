@@ -1,64 +1,37 @@
 <!--@subject {{trans "Canceled Order"}} @-->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <style type="text/css">
-        {{var template_styles|raw}}
+{{template config_path="design/email/header_template"}}
+<div class="cancel-order-title">
+    <h2 class="title" style="font-weight: 600; margin-bottom: 0">Order Cancelation</h2>
+    <p class="order-id">
+        <label class="label" style="font-weight: 600; margin-bottom:0">Order:</label>
+        {{var orderid}}
+    </p>
+</div>
+<div class="cancel-order-content">
+    <div class="content-item">
+        <h2 class="title" style="font-weight: 600; margin-bottom: 0">Hello {{var customer_lastname}}</h2>
+        <p class="text">We're writing to let you know that your order has been successfuly canceled. In most cases, you pay for items when ship them to you, so you won't be charged for items that are canceled *.</p>
+    </div>
+    <div class="content-item">
+        <h2 class="title" style="font-weight: 600; margin-bottom: 0">Order Detail</h2>
+        <p class="order-id" style="margin-bottom: 0">
+            <label class="label" style="font-weight: 600; margin-bottom:0">Order:</label> 
+        {{var orderid}}</p>
+        <p class="text" style="margin-bottom: 0">Placed on {{var created_at}}
+        </p>
+        <div class="order-items" style="margin-top:20px;">
 
-        {{css file="css/email.css"}}
-    </style>
-</head>
-<body>
-{{inlinecss file="css/email-inline.css"}}
+            {{layout handle="email_product_list" products=$collectionProduct area="frontend"}}
 
-<!-- Begin wrapper table -->
-<table class="wrapper" width="100%">
-    <tr>
-        <td class="wrapper-inner" align="center">
-            <table class="main" align="center">
-                <tr>
-                    <td class="header">
-                    	<h1>
-                    		{{trans "Order has been canceled"}}
-                    		<div style="color: red; text-align: center;">{{trans "order #%increment_id" increment_id=$data.increment_id}}</div>
-                    	</h1>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="main-content">
-                    <!-- Begin Content -->                    
-					<table style="width:100%; border: 1px solid black; border-collapse: collapse;">
-					  <tr>
-					    <td style="width:100%; border: 1px solid black; border-collapse: collapse;padding: 15px;text-align: left; font-size: 16px; font-weight: 700;">{{trans "Customer Name:"}}</td>
-					    <td style="width:100%; border: 1px solid black; border-collapse: collapse;padding: 15px;text-align: left;">{{trans "%customer_lastname" customer_lastname=$data.customer_lastname}}</td>
-					  </tr>
-					  <tr>
-					    <td style="width:100%; border: 1px solid black; border-collapse: collapse;padding: 15px;text-align: left; font-size: 16px; font-weight: 700;">{{trans "Order ID:"}}</td>
-					    <td style="width:100%; border: 1px solid black; border-collapse: collapse;padding: 15px;text-align: left;">{{trans "#%increment_id" increment_id=$data.increment_id}}</td>
-					  </tr>
-					  <tr>
-					    <td style="width:100%; border: 1px solid black; border-collapse: collapse;padding: 15px;text-align: left; font-size: 16px; font-weight: 700;">{{trans "Customer Email:"}}</td>
-					    <td style="width:100%; border: 1px solid black; border-collapse: collapse;padding: 15px;text-align: left;">{{trans "%customer_email" customer_email=$data.customer_email}}</td>
-					  </tr>
-					  <tr>
-					    <td style="width:100%; border: 1px solid black; border-collapse: collapse;padding: 15px;text-align: left; font-size: 16px; font-weight: 700;">{{trans "Order Status:"}}</td>
-					    <td style="width:100%; border: 1px solid black; border-collapse: collapse;padding: 15px;text-align: left;">{{trans "Canceled"}}</td>
-					  </tr>
-					</table>
-                    <!-- End Content -->
-                    </td>
-                </tr>
-                <tr>
-                    <td class="footer" style="font-size: 16px; font-weight: 700; text-align: center;background-color: #dbdbdb;">
-                        <p class="closing">{{trans "Thank you, %store_name" store_name=$store.frontend_name}}!</p>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
-<!-- End wrapper table -->
-</body>
+            <div class="total" style="margin-top:20px;">
+                <label class="label" style="font-weight: 600; margin-bottom:0">Total:</label>
+                <span class="text"><span class="currency">{{var order_currency_code}}</span>{{var base_grand_total}}</span>
+            </div>
+            <div class="sold-by">
+                <label class="label" style="font-weight: 600; margin-bottom:0">Sold by:</label>
+                <span class="text">{{var store_name}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+{{template config_path="design/email/footer_template"}}
