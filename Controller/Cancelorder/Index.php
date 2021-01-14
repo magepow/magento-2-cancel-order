@@ -4,7 +4,7 @@
  * @Author: Ha Manh
  * @Date:   2020-12-08 08:29:17
  * @Last Modified by:   Ha Manh
- * @Last Modified time: 2021-01-14 09:49:29
+ * @Last Modified time: 2021-01-14 10:35:19
  */
 
 namespace Magepow\CancelOrder\Controller\Cancelorder;
@@ -13,34 +13,35 @@ use Magento\Framework\Controller\ResultFactory;
 
 use Magento\Framework\Mail\Template\TransportBuilder;
 
+use Magento\Framework\Pricing\Helper\Data;
+
 class Index extends \Magento\Framework\App\Action\Action
 {
-
+    protected $priceHelper;
     protected $resultPageFactory;
     protected $_order;
     protected $customer;
     private $transportBuilder;
     protected $helper;
-    protected $orderRepository;
     protected $collectionFactory;
 
     public function __construct(
+        Data $priceHelper,
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Sales\Model\Order $order,
         \Magento\Customer\Model\Session $customerSession,
         TransportBuilder $transportBuilder,
         \Magepow\CancelOrder\Helper\Data $helper,
-        \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $collectionFactory,
         array $data = [])
     {
+        $this->priceHelper = $priceHelper;
         $this->resultPageFactory = $resultPageFactory;
         $this->_order            = $order;
         $this->_customerSession  = $customerSession;
         $this->transportBuilder  = $transportBuilder;
         $this->helper            = $helper;
-        $this->orderRepository = $orderRepository;
         $this->collectionFactory = $collectionFactory;
         return parent::__construct($context,$data);
     }
@@ -50,10 +51,9 @@ class Index extends \Magento\Framework\App\Action\Action
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
         $orderId = $this->getRequest()->getParam('orderid');
         $order = $this->_order->load($orderId);
-        $orderItems = $this->orderRepository->get($orderId);
         $productId = [];
-        foreach ($orderItems->getAllItems() as $item) {
-            $productId[] = $item->getId();
+        foreach ($order->getAllItems() as $item) {
+            $productId[] = $item->getProductId();
         }
         $productCollection = $this->collectionFactory->create();
         $productCollection->addAttributeToSelect('*')->addFieldToFilter('entity_id', array('in' => $productId));
@@ -69,14 +69,12 @@ class Index extends \Magento\Framework\App\Action\Action
             $this->messageManager->addSuccess(__('Order has been canceled successfully.'));
             if($this->helper->getEmailSeller())
             {
-
                 if($this->helper->getEmailSender())
                 {
                     $customerData = $this->_customerSession->getCustomer();
+                    $post['site_name'] = $order->getStore()->getWebsite()->getName();
                     $post['entity_id'] = $order->getEntity_id();
-                    $post['order_currency_code'] = $order->getOrder_currency_code();
-                    $post['base_grand_total'] = $order->getBase_grand_total();
-                    $post['store_name'] = $order->getStore_name();
+                    $post['base_grand_total'] = $this->priceHelper->currency($order->getBase_grand_total(), true, false);
                     $post['created_at'] = $order->getCreated_at();
                     $post['customer_lastname'] = $order->getCustomer_lastname();
                     $post['orderid'] = $order->getIncrement_id();
@@ -99,7 +97,6 @@ class Index extends \Magento\Framework\App\Action\Action
             }else{
                 if($this->helper->getEmailSender())
                 {
-
                     $customerData = $this->_customerSession->getCustomer();
                     $post['order_currency_code'] = $order->getOrder_currency_code();
                     $post['base_grand_total'] = $order->getBase_grand_total();
