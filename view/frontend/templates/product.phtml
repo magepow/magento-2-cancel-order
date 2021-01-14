@@ -7,11 +7,11 @@ foreach ($products as $product){
   ?>
 	<div class="order-item" style="margin-bottom:10px;">
 	  <div class="item-img" style="display: inline-block; margin-right:10px;">
-	  	<a href="<?php echo $product->getProductUrl(); ?>" title="<?php echo $product->getName() ?>"><img src="<?php echo $image_url ?>" alt="<?php echo $product->getName() ?>"></a>
+	  	<a href="<?php echo $product->getProductUrl(); ?>" title="<?php echo $product->getName() ?>" style="text-decoration: none;"><img src="<?php echo $image_url ?>" alt="<?php echo $product->getName() ?>"></a>
 	  </div>
 	  <div class="item-detail" style="display:inline-block;">
 	    <div class="product-name">
-	    	<a href="<?php echo $product->getProductUrl(); ?>" title="<?php echo $product->getName() ?>"><?php echo $product->getName() ?></a>
+	    	<a href="<?php echo $product->getProductUrl(); ?>" title="<?php echo $product->getName() ?>" style="text-decoration: none;"><?php echo $product->getName() ?></a>
 	    </div>
 	  </div>
 	</div>

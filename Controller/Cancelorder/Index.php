@@ -4,7 +4,7 @@
  * @Author: Ha Manh
  * @Date:   2020-12-08 08:29:17
  * @Last Modified by:   Ha Manh
- * @Last Modified time: 2021-01-13 10:03:59
+ * @Last Modified time: 2021-01-14 09:49:29
  */
 
 namespace Magepow\CancelOrder\Controller\Cancelorder;
@@ -73,6 +73,7 @@ class Index extends \Magento\Framework\App\Action\Action
                 if($this->helper->getEmailSender())
                 {
                     $customerData = $this->_customerSession->getCustomer();
+                    $post['entity_id'] = $order->getEntity_id();
                     $post['order_currency_code'] = $order->getOrder_currency_code();
                     $post['base_grand_total'] = $order->getBase_grand_total();
                     $post['store_name'] = $order->getStore_name();
