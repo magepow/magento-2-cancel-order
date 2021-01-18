@@ -1,14 +1,14 @@
 <!--@subject {{trans "Canceled Order"}} @-->
 <div class="header" style="margin-top:50px;">
-    <a class="logo" href="{{store url=''}}" style="width: 100px; display: inline-block;">
-        <img {{if logo_width}} width="{{var logo_width}}" {{else}} width="180" {{/if}} {{if logo_height}} height="{{var logo_height}}" {{/if}} src="{{var logo_url}}" alt="{{var logo_alt}}" border="0"
+    <a class="logo" href="{{store url=''}}" style="width: 200px; display: inline-block;">
+        <img {{if logo_width}} width="{{var logo_width}}" {{else}} width="180" {{/if}} {{if logo_height}} height="{{var logo_height}}" {{/if}} src="{{var logo_url}}" alt="{{var logo_alt}}" border="0" style="max-width: 100%;vertical-align: middle;"
         />
     </a>
-    <div class="email-header-links" style="width: -moz-calc(100% - 100px - 10px); width: -webkit-calc(100% - 100px - 10px); width:calc(100% - 100px - 10px); display:inline-block; text-align: right;padding-bottom: 10px;border-bottom: 1px solid #dfdfdf;">
+    <div class="email-header-links" style="width: -moz-calc(100% - 200px - 10px); width: -webkit-calc(100% - 100px - 10px); width:calc(100% - 100px - 10px); display:inline-block; text-align: right;padding-bottom: 10px;border-bottom: 1px solid #dfdfdf;">
         <ul style="list-style-type: none;margin:0;">
             <li style="display: inline-block;"><a href="{{store url='sales/order/history'}}">Your Order</a></li>
             <li style="display: inline-block;margin: 0 5px; padding: 0 5px; border-width: 0 1px;border-style: solid;border-color: #dfdfdf;"><a href="{{store url='customer/account'}}">Your Account</a></li>
-            <li style="display: inline-block;"><a href="{{store url=''}}">{{var site_name}}</a></li>
+            <li style="display: inline-block;margin-left:0;"><a href="{{store url=''}}">{{var site_name}}.com</a></li>
         </ul>
     </div>
 </div>
@@ -23,7 +23,7 @@
 <div class="cancel-order-content">
     <div class="content-item" style="padding-bottom: 20px;">
         <h2 class="title" style="font-weight: 600; margin-bottom: 0; color:#fc7f02;">Hello {{var customer_lastname}}</h2>
-        <p class="text" style="margin-bottom:0;">We're writing to let you know that your order has been successfuly canceled. In most cases, you pay for items when ship them to you, so you won't be charged for items that are canceled *.</p>
+        <p class="text" style="margin-bottom:0;">We're writing to let you know that your order has been successfully canceled. In most cases, you pay for items when we ship them to you, so you won't be charged for items that are canceled.*</p>
     </div>
     <div class="content-item" style="padding-bottom: 20px;margin-bottom:20px;border-bottom:1px solid #dfdfdf">
         <h2 class="title" style="font-weight: 600; margin-bottom: 0; border-bottom:1px solid #dfdfdf;padding-bottom:5px;color:#fc7f02;">Order Detail</h2>
@@ -46,7 +46,7 @@
             </div>
             <div class="sold-by" style="margin-bottom:10px;">
                 <label class="label" style="font-weight: 600; margin-bottom:0;">Sold by:</label>
-                <a href="{{store url=''}}" class="text" style="text-decoration: none;">{{var site_name}}</a>
+                <a href="{{store url=''}}" class="text" style="text-decoration: none;">{{var site_name}}.com</a>
             </div>
             <div class="reason">
                 <label class="label" style="font-weight: 600; margin-bottom:0">Cancel Reason:</label>
@@ -58,6 +58,6 @@
 <div class="footer">
     <div class="note">If you need further assistance, please visit <a href="{{store url='contact'}}" style="text-decoration: none;">Help</a></div>
     <div class="text" style="margin-top:20px;">We hope to see you again</div>
-    <div class="name-site" style="font-weight:600;">{{var site_name}}</div>
-    <div class="texttip" style="margin-top:20px;padding-top:5px; border-top:1px solid #dfdfdf;">*In some cases (e.g you use a gift card or debit card is processed as a PIN-less transaction), you may see a charge for a canceled item. If you are charged for a canceled item, wwe will automatically refun you within 3-5 business days.</div>
+    <div class="name-site" style="font-weight:600;">{{var store_name}}</div>
+    <div class="texttip" style="margin-top:20px;padding-top:5px; border-top:1px solid #dfdfdf;">*ln some cases (e.g. you use a gift card or your debit card is processed as a PIN-less transaction), you may see a charge for a canceled item. If you are charged for a canceled item, we will automatically refund you within 3-5 business days.</div>
 </div>

@@ -4,7 +4,7 @@
  * @Author: Ha Manh
  * @Date:   2020-12-08 08:29:17
  * @Last Modified by:   Ha Manh
- * @Last Modified time: 2021-01-14 10:35:19
+ * @Last Modified time: 2021-01-18 09:28:27
  */
 
 namespace Magepow\CancelOrder\Controller\Cancelorder;
@@ -72,6 +72,7 @@ class Index extends \Magento\Framework\App\Action\Action
                 if($this->helper->getEmailSender())
                 {
                     $customerData = $this->_customerSession->getCustomer();
+                    $post['store_name'] = $order->getStore()->getName();
                     $post['site_name'] = $order->getStore()->getWebsite()->getName();
                     $post['entity_id'] = $order->getEntity_id();
                     $post['base_grand_total'] = $this->priceHelper->currency($order->getBase_grand_total(), true, false);
@@ -98,9 +99,10 @@ class Index extends \Magento\Framework\App\Action\Action
                 if($this->helper->getEmailSender())
                 {
                     $customerData = $this->_customerSession->getCustomer();
-                    $post['order_currency_code'] = $order->getOrder_currency_code();
-                    $post['base_grand_total'] = $order->getBase_grand_total();
-                    $post['store_name'] = $order->getStore_name();
+                    $post['store_name'] = $order->getStore()->getName();
+                    $post['site_name'] = $order->getStore()->getWebsite()->getName();
+                    $post['entity_id'] = $order->getEntity_id();
+                    $post['base_grand_total'] = $this->priceHelper->currency($order->getBase_grand_total(), true, false);
                     $post['created_at'] = $order->getCreated_at();
                     $post['customer_lastname'] = $order->getCustomer_lastname();
                     $post['orderid'] = $order->getIncrement_id();
