@@ -1,5 +1,10 @@
 # Magento 2 Cancel Order
 This module is allow user can cancel order in frontend.
+
+[![Latest Stable Version](https://poser.pugx.org/magepow/cancelorder/v/stable)](https://packagist.org/packages/magepow/cancelorder)
+[![Total Downloads](https://poser.pugx.org/magepow/cancelorder/downloads)](https://packagist.org/packages/magepow/cancelorder)
+[![Daily Downloads](https://poser.pugx.org/magepow/cancelorder/d/daily)](https://packagist.org/packages/magepow/cancelorder)
+
 ## 2. How to install Magento 2 Cancel Order extension Free
 ### ✓ Install Magepow Cancel Order via composer (recommend)
 Run the following command in Magento 2 root folder:
