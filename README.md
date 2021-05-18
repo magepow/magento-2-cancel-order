@@ -4,7 +4,8 @@ This module is allow user can cancel order in frontend.
 ### Description
 In many cases, customers order a product on a website but change their mind and don't want to buy that product anymore. To cancel an order, they have to contact the website administrator and have to wait for customer service to process the request.
 
-Allows Magento website to integrate the order cancellation feature right on the user interface. Customers can fully control the orders they have paid on the website.
+
+**Cancel order extension** allows Magento website to integrate the order cancellation feature right on the user interface. Customers can fully control the orders they have paid on the website.
 
 ### Features
 
@@ -20,7 +21,6 @@ Allows Magento website to integrate the order cancellation feature right on the 
 
 - User-friendly interface
 
-**Cancel order extension** 
 [![Latest Stable Version](https://poser.pugx.org/magepow/cancelorder/v/stable)](https://packagist.org/packages/magepow/cancelorder)
 [![Total Downloads](https://poser.pugx.org/magepow/cancelorder/downloads)](https://packagist.org/packages/magepow/cancelorder)
 [![Daily Downloads](https://poser.pugx.org/magepow/cancelorder/d/daily)](https://packagist.org/packages/magepow/cancelorder)
