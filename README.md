@@ -1,6 +1,26 @@
-# Magento 2 Cancel Order
+## Magento 2 Cancel Order
 This module is allow user can cancel order in frontend.
 
+### Description
+In many cases, customers order a product on a website but change their mind and don't want to buy that product anymore. To cancel an order, they have to contact the website administrator and have to wait for customer service to process the request.
+
+Allows Magento website to integrate the order cancellation feature right on the user interface. Customers can fully control the orders they have paid on the website.
+
+### Features
+
+- Customers automatically cancel orders quickly
+
+- Notify admin about canceled orders
+
+- Send order cancellation confirmation to customer's email.
+
+- Convenient management in the backend
+
+- Simple steps to install and use but bring great features
+
+- User-friendly interface
+
+**Cancel order extension** 
 [![Latest Stable Version](https://poser.pugx.org/magepow/cancelorder/v/stable)](https://packagist.org/packages/magepow/cancelorder)
 [![Total Downloads](https://poser.pugx.org/magepow/cancelorder/downloads)](https://packagist.org/packages/magepow/cancelorder)
 [![Daily Downloads](https://poser.pugx.org/magepow/cancelorder/d/daily)](https://packagist.org/packages/magepow/cancelorder)
@@ -14,6 +34,13 @@ composer require magepow/cancelorder
 php bin/magento setup:upgrade
 php bin/magento setup:static-content:deploy -f
 ```
+
+## 3. How does Cancel order work for Magento?
+
+In Store > Configuration > Magepow > Cancel Order
+
+![admin_config.png](https://github.com/magepow/magento-2-cancel-order/blob/master/media/admin_config.png)
+
 ### This Is Result In Frontend
 ![result-module-img](https://github.com/magepow/magento2-cancel-order/blob/master/media/order-history.gif)
 
