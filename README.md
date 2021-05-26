@@ -1,4 +1,4 @@
-## Magento 2 Cancel Order
+## Magento 2 Cancel Order by Customer
 This module is allow user can cancel order in frontend.
 
 ### Description
