@@ -3,47 +3,43 @@
 /**
  * @Author: Ha Manh
  * @Date:   2020-12-08 08:29:17
- * @Last Modified by:   Ha Manh
- * @Last Modified time: 2021-01-18 09:28:27
+ * @Last Modified by:   Alex Dong
+ * @Last Modified time: 2021-06-04 10:45:54
  */
 
 namespace Magepow\CancelOrder\Controller\Cancelorder;
 
 use Magento\Framework\Controller\ResultFactory;
 
-use Magento\Framework\Mail\Template\TransportBuilder;
-
-use Magento\Framework\Pricing\Helper\Data;
-
 class Index extends \Magento\Framework\App\Action\Action
 {
+    private   $transportBuilder;
     protected $priceHelper;
     protected $resultPageFactory;
     protected $_order;
     protected $customer;
-    private $transportBuilder;
     protected $helper;
     protected $collectionFactory;
 
     public function __construct(
-        Data $priceHelper,
         \Magento\Framework\App\Action\Context $context,
+        \Magento\Framework\Pricing\Helper\Data $priceHelper,
+        \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Sales\Model\Order $order,
         \Magento\Customer\Model\Session $customerSession,
-        TransportBuilder $transportBuilder,
         \Magepow\CancelOrder\Helper\Data $helper,
-        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $collectionFactory,
-        array $data = [])
-    {
-        $this->priceHelper = $priceHelper;
+        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $collectionFactory
+    ) {
+        $this->priceHelper       = $priceHelper;
         $this->resultPageFactory = $resultPageFactory;
         $this->_order            = $order;
         $this->_customerSession  = $customerSession;
         $this->transportBuilder  = $transportBuilder;
         $this->helper            = $helper;
         $this->collectionFactory = $collectionFactory;
-        return parent::__construct($context,$data);
+
+        return parent::__construct($context);
     }
 
     public function execute()
