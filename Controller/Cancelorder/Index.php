@@ -10,6 +10,8 @@
 namespace Magepow\CancelOrder\Controller\Cancelorder;
 
 use Magento\Framework\Controller\ResultFactory;
+use Psr\Log\LoggerInterface;
+use Magento\Framework\App\ObjectManager;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
@@ -20,6 +22,11 @@ class Index extends \Magento\Framework\App\Action\Action
     protected $customer;
     protected $helper;
     protected $collectionFactory;
+    protected $_customerSession;
+        /**
+     * @var LoggerInterface
+     */
+    private $logger;
 
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -29,7 +36,8 @@ class Index extends \Magento\Framework\App\Action\Action
         \Magento\Sales\Model\Order $order,
         \Magento\Customer\Model\Session $customerSession,
         \Magepow\CancelOrder\Helper\Data $helper,
-        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $collectionFactory
+        \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $collectionFactory,
+        LoggerInterface $logger = null
     ) {
         $this->priceHelper       = $priceHelper;
         $this->resultPageFactory = $resultPageFactory;
@@ -38,6 +46,7 @@ class Index extends \Magento\Framework\App\Action\Action
         $this->transportBuilder  = $transportBuilder;
         $this->helper            = $helper;
         $this->collectionFactory = $collectionFactory;
+        $this->logger = $logger ?: ObjectManager::getInstance()->get(LoggerInterface::class);
 
         return parent::__construct($context);
     }
@@ -89,7 +98,11 @@ class Index extends \Magento\Framework\App\Action\Action
                     ->addTo($senderEmail)
                     ->addCc($this->helper->getEmailSeller())           
                     ->getTransport();               
-                    $transport->sendMessage();
+                    try {
+                        $transport->sendMessage();
+                    } catch (\Exception $e) {
+                        $this->logger->critical($e->getMessage());
+                    }
                 }
             }else{
                 if($this->helper->getEmailSender())
@@ -115,7 +128,11 @@ class Index extends \Magento\Framework\App\Action\Action
                     ->setFrom($sender)
                     ->addTo($senderEmail)       
                     ->getTransport();               
-                    $transport->sendMessage();
+                    try {
+                        $transport->sendMessage();
+                    } catch (\Exception $e) {
+                        $this->logger->critical($e->getMessage());
+                    }
                 }
             }
         } else {
