@@ -72,73 +72,53 @@ class Index extends \Magento\Framework\App\Action\Action
             $order->cancel();
             $order->save();
             $this->messageManager->addSuccess(__('Order has been canceled successfully.'));
-            if($this->helper->getEmailSeller())
-            {
-                if($this->helper->getEmailSender())
-                {
-                    $customerData = $this->_customerSession->getCustomer();
-                    $post['store_name'] = $order->getStore()->getName();
-                    $post['site_name'] = $order->getStore()->getWebsite()->getName();
-                    $post['entity_id'] = $order->getEntity_id();
-                    $post['base_grand_total'] = $this->priceHelper->currency($order->getBase_grand_total(), true, false);
-                    $post['created_at'] = $order->getCreated_at();
-                    $post['customer_lastname'] = $order->getCustomer_lastname();
-                    $post['orderid'] = $order->getIncrement_id();
-
-                    $senderName = $customerData->getName();
-                    $senderEmail = $customerData->getEmail();
-                    $sender = [
-                        'name' => $senderName,
-                        'email' => $this->helper->getEmailSender(),
-                        ];
+            $post['store_id'] = $order->getStore()->getStoreId();
+            $post['store_name'] = $order->getStore()->getName();
+            $post['site_name'] = $order->getStore()->getWebsite()->getName();
+            $post['entity_id'] = $order->getEntity_id();
+            $post['base_grand_total'] = $this->priceHelper->currency($order->getBase_grand_total(), true, false);
+            $post['created_at'] = $order->getCreated_at();
+            $post['customer_lastname'] = $order->getCustomer_lastname();
+            $post['orderid'] = $order->getIncrement_id();
+            $customerData = $this->_customerSession->getCustomer();
+            $senderName = $customerData->getName();
+            $senderEmail = $customerData->getEmail();
+            $sender = [
+                'name' => $senderName,
+                'email' => $this->helper->getEmailSender(),
+                ];
+            if($this->helper->getEmailSender()){
+                if($this->helper->getEmailSeller()){
                     $transport = $this->transportBuilder->setTemplateIdentifier('cancel_order_email_template')
-                    ->setTemplateOptions(['area' => \Magento\Framework\App\Area::AREA_FRONTEND, 'store' => \Magento\Store\Model\Store::DEFAULT_STORE_ID])
+                    ->setTemplateOptions(['area' => \Magento\Framework\App\Area::AREA_FRONTEND, 'store' => $post['store_id']])
                     ->setTemplateVars($post)
                     ->setFrom($sender)
                     ->addTo($senderEmail)
                     ->addCc($this->helper->getEmailSeller())           
                     ->getTransport();               
-                    try {
-                        $transport->sendMessage();
-                    } catch (\Exception $e) {
-                        $this->logger->critical($e->getMessage());
-                    }
-                }
-            }else{
-                if($this->helper->getEmailSender())
-                {
-                    $customerData = $this->_customerSession->getCustomer();
-                    $post['store_name'] = $order->getStore()->getName();
-                    $post['site_name'] = $order->getStore()->getWebsite()->getName();
-                    $post['entity_id'] = $order->getEntity_id();
-                    $post['base_grand_total'] = $this->priceHelper->currency($order->getBase_grand_total(), true, false);
-                    $post['created_at'] = $order->getCreated_at();
-                    $post['customer_lastname'] = $order->getCustomer_lastname();
-                    $post['orderid'] = $order->getIncrement_id();
-
-                    $senderName = $customerData->getName();
-                    $senderEmail = $customerData->getEmail();
-                    $sender = [
-                        'name' => $senderName,
-                        'email' => $this->helper->getEmailSender(),
-                        ];
+                }else {
                     $transport = $this->transportBuilder->setTemplateIdentifier('cancel_order_email_template')
-                    ->setTemplateOptions(['area' => \Magento\Framework\App\Area::AREA_FRONTEND, 'store' => \Magento\Store\Model\Store::DEFAULT_STORE_ID])
+                    ->setTemplateOptions(['area' => \Magento\Framework\App\Area::AREA_FRONTEND, 'store' => $post['store_id']])
                     ->setTemplateVars($post)
                     ->setFrom($sender)
                     ->addTo($senderEmail)       
-                    ->getTransport();               
-                    try {
-                        $transport->sendMessage();
-                    } catch (\Exception $e) {
-                        $this->logger->critical($e->getMessage());
-                    }
+                    ->getTransport();                              
                 }
+
+                try {
+                    $transport->sendMessage();
+                } catch (\Exception $e) {
+                    $this->logger->critical($e->getMessage());
+                }
+
             }
+
         } else {
             $this->messageManager->addError(__('Order cannot be canceled.'));
         }
+
         $resultRedirect->setUrl($this->_redirect->getRefererUrl());
+
         return $resultRedirect;
     }
 }
