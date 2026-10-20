@@ -37,7 +37,7 @@ class Index extends \Magento\Framework\App\Action\Action
         \Magento\Customer\Model\Session $customerSession,
         \Magepow\CancelOrder\Helper\Data $helper,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $collectionFactory,
-        LoggerInterface $logger = null
+        ?LoggerInterface $logger = null
     ) {
         $this->priceHelper       = $priceHelper;
         $this->resultPageFactory = $resultPageFactory;
